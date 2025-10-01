@@ -6,59 +6,111 @@
   <title>Ximan Dong | Academic CV</title>
   <meta name="description" content="Academic CV – Research, Publications, Talks, Awards" />
   <style>
-    :root{--bg:#fff;--text:#0f172a;--muted:#6b7280;--link:#2563eb}
+    :root{
+      /* Nature/Cell 风格：留白 + 学术蓝/紫 */
+      --bg:#ffffff;--text:#0f172a;--muted:#64748b;--line:#e5e7eb;
+      --accent:#3b82f6; /* blue */
+      --accent2:#8b5cf6;/* purple */
+      --chip:#f3f6fb;--chip-text:#0b1220;
+      --radius:18px;--max:1100px;
+    }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    a{color:var(--link);text-decoration:none} a:hover{text-decoration:underline}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    h1,h2{font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;letter-spacing:.2px}
+    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
 
-    /* ==== Layout: left sticky sidebar + right scrollable ==== */
-    .shell{display:grid;grid-template-columns:300px 1fr;gap:28px;max-width:1100px;margin:0 auto;padding:28px}
-    @media (max-width:980px){.shell{grid-template-columns:1fr}}
+    /* ===== Layout: left sticky sidebar + right scrollable ===== */
+    .shell{display:grid;grid-template-columns:320px 1fr;gap:36px;max-width:var(--max);margin:0 auto;padding:36px 28px}
+    @media (max-width:980px){.shell{grid-template-columns:1fr;padding:24px}}
 
     /* Sidebar */
-    .side{position:sticky;top:20px;align-self:start}
-    .photo{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px;box-shadow:0 6px 24px rgba(0,0,0,.08)}
-    h1{font-size:28px;margin:14px 0 4px}
+    .side{position:sticky;top:24px;align-self:start;text-align:center;padding-inline:14px}
+    .avatar-wrap{padding:0 18px} /* 左右留白 */
+    .photo{width:160px;height:160px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 12px;border:3px solid #fff;box-shadow:0 6px 24px rgba(15,23,42,.12)}
+    .ring{position:relative}
+    .ring::after{content:"";position:absolute;inset:-4px;border-radius:999px;background:conic-gradient(from 0deg, var(--accent), var(--accent2));filter:blur(.6px);z-index:-1}
+    h1{font-size:26px;margin:8px 0 6px}
     .tag{color:var(--muted);margin:0 0 14px}
-    .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
-    .pill{padding:6px 10px;border-radius:999px;background:#f3f4f6;color:#111827;font-size:12px}
-    .links{display:grid;gap:8px;margin-top:14px}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;background:#111827;color:#fff;text-decoration:none}
+    .pillrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 18px}
+    .pill{padding:6px 10px;border-radius:999px;background:var(--chip);color:var(--chip-text);font-size:12px;border:1px solid var(--line)}
+
+    /* icon row for contact */
+    .icon-row{display:flex;justify-content:center;gap:14px;margin:10px 0 18px}
+    .icon-row a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:999px;border:1px solid var(--line);background:#fff;box-shadow:0 2px 10px rgba(2,6,23,.06)}
+    .icon-row a:hover{box-shadow:0 0 0 3px rgba(59,130,246,.2)}
+    .icon{width:18px;height:18px;fill:#0b1220}
+
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;background:linear-gradient(180deg,#111827,#0b1220);color:#fff;text-decoration:none}
     .btn.secondary{background:#f3f4f6;color:#111827}
 
+    /* Metrics */
+    .metrics{display:flex;justify-content:center;gap:10px;margin-top:6px}
+    .metric{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;min-width:110px}
+    .metric .num{font-weight:800;font-size:18px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .metric .label{color:var(--muted);font-size:12px}
+
     /* Content */
-    main{display:grid;gap:28px}
-    section h2{font-size:20px;margin:0 0 6px}
+    main{display:grid;gap:32px}
+    section h2{font-size:22px;margin:0 0 10px}
     .muted{color:var(--muted)}
-    .block{padding:0 0 6px;border-bottom:1px solid #eceff3}
-    ul,ol{margin:8px 0 0 18px}
-    .timeline{display:grid;gap:10px}
-    .item{display:grid;grid-template-columns:120px 1fr;gap:12px}
+    .block{padding:0 0 10px;border-bottom:1px solid var(--line)}
+    ul,ol{margin:8px 0 0 20px}
+
+    /* Timeline with icons */
+    .timeline{position:relative;display:grid;gap:16px;margin-left:4px}
+    .timeline::before{content:"";position:absolute;left:10px;top:0;bottom:0;width:2px;background:linear-gradient(var(--accent),var(--accent2))}
+    .item{position:relative;display:grid;grid-template-columns:140px 1fr;gap:14px;padding-left:18px}
     .item time{color:var(--muted);font-variant-numeric:tabular-nums}
-    @media (max-width:600px){.item{grid-template-columns:1fr}}
+    .item::before{content:"";position:absolute;left:2px;top:8px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--accent)}
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px;background:#fff;margin-left:6px}
+    .dot{display:inline-block;width:7px;height:7px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2));margin-right:6px}
+
+    @media (max-width:700px){.item{grid-template-columns:1fr}}
+      /* 当侧栏内容高度大于视口时，自动取消粘性，避免遮挡 */
+    .side.is-static{position:static}
+    @media (max-height: 750px){.side{position:static}}
   </style>
 </head>
 <body>
   <div class="shell">
     <!-- LEFT: sticky sidebar -->
     <aside class="side">
-      <img class="photo" src="./me.jpg" alt="Ximan Dong"/>
+      <div class="avatar-wrap ring">
+        <img class="photo" src="./me.jpg" alt="Ximan Dong"/>
+      </div>
       <h1>Ximan Dong</h1>
       <p class="tag">Materials Science · Energy Storage · Photoelectrochemistry</p>
 
       <div class="pillrow">
         <span class="pill">WO₃/TiO₂</span>
-        <span class="pill">BDD / Diamond</span>
+        <span class="pill">BDD · Diamond</span>
         <span class="pill">NH₄⁺ Storage</span>
         <span class="pill">Photo‑assisted</span>
         <span class="pill">Heterojunctions</span>
       </div>
 
-      <div class="links">
-        <a class="btn" href="mailto:ximan.dong@outlook.com">Email Me</a>
-        <a class="btn secondary" href="./cv.pdf" download>Download CV</a>
-        <a class="btn secondary" href="https://github.com/ximandong" target="_blank">GitHub</a>
-        <a class="btn secondary" href="https://scholar.google.com" target="_blank">Google Scholar</a>
+      <!-- one-row contact icons -->
+      <div class="icon-row" aria-label="Contact links">
+        <a href="mailto:ximan.dong@outlook.com" title="Email">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z"/></svg>
+        </a>
+        <a href="https://scholar.google.com" target="_blank" title="Google Scholar">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 10l11 7 9-5.7V20h2V10L12 3Zm0 3.2L18.3 10 12 13.8 5.7 10 12 6.2Z"/></svg>
+        </a>
+        <a href="https://github.com/ximandong" target="_blank" title="GitHub">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.93c.58.1.8-.25.8-.56v-2c-3.19.7-3.86-1.37-3.86-1.37-.53-1.36-1.3-1.73-1.3-1.73-1.07-.74.08-.73.08-.73 1.18.08 1.8 1.22 1.8 1.22 1.05 1.8 2.75 1.28 3.42.98.1-.77.41-1.28.74-1.58-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.3 1.2-3.12-.12-.29-.52-1.47.11-3.07 0 0 .98-.31 3.2 1.19A11.15 11.15 0 0 1 12 6.8c.99 0 1.98.13 2.9.38 2.22-1.5 3.2-1.2 3.2-1.2.63 1.6.23 2.78.11 3.07.75.82 1.2 1.86 1.2 3.12 0 4.41-2.69 5.38-5.25 5.67.42.36.79 1.06.79 2.14v3.17c0 .31.22.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com" target="_blank" title="LinkedIn">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8h4V24h-4V8ZM8 8h3.8v2.2h.06c.53-1 1.82-2.2 3.75-2.2C19.1 8 20 10.7 20 14.1V24h-4v-8.7c0-2.1-.04-4.7-2.9-4.7-2.9 0-3.4 2.3-3.4 4.5V24H8V8Z" transform="scale(.9) translate(2,0)"/></svg>
+        </a>
+      </div>
+
+      <a class="btn" style="margin-top:4px" href="./cv.pdf" download>Download CV</a>
+
+      <!-- Academic metrics (edit numbers below or pass as URL ?h=12&c=850) -->
+      <div class="metrics">
+        <div class="metric"><div class="num" id="m-citations">—</div><div class="label">Citations</div></div>
+        <div class="metric"><div class="num" id="m-hindex">—</div><div class="label">h‑index</div></div>
       </div>
     </aside>
 
@@ -72,19 +124,19 @@
       <section class="block" id="education">
         <h2>Education</h2>
         <div class="timeline">
-          <div class="item"><time>2022–2026</time><div><strong>PhD, Materials Engineering — University of Siegen (Germany)</strong><br/><span class="muted">Supervisor: Prof. Xin Jiang</span></div></div>
-          <div class="item"><time>2022–2026</time><div><strong>PhD, Chemistry — Hasselt University (Belgium)</strong><br/><span class="muted">Supervisors: Prof. Nianjun Yang, Prof. Ken Haenen</span></div></div>
-          <div class="item"><time>2017–2021</time><div><strong>MSc, Electrochemistry — Tianjin University</strong><br/><span class="muted">Supervisors: Prof. Ying Tao, Prof. Quan‑Hong Yang</span></div></div>
-          <div class="item"><time>2013–2017</time><div><strong>BSc, Applied Chemistry — Hebei Normal Univ. of Science & Technology</strong></div></div>
+          <div class="item"><time>2022–2026</time><div><strong><span class="dot"></span>PhD, Materials Engineering — University of Siegen (Germany)</strong><span class="badge">Advisor: Xin Jiang</span></div></div>
+          <div class="item"><time>2022–2026</time><div><strong><span class="dot"></span>PhD, Chemistry — Hasselt University (Belgium)</strong><span class="badge">Advisors: Nianjun Yang · Ken Haenen</span></div></div>
+          <div class="item"><time>2017–2021</time><div><strong><span class="dot"></span>MSc, Electrochemistry — Tianjin University</strong><span class="badge">Advisors: Ying Tao · Quan‑Hong Yang</span></div></div>
+          <div class="item"><time>2013–2017</time><div><strong><span class="dot"></span>BSc, Applied Chemistry — Hebei Normal Univ. of Sci & Tech</strong></div></div>
         </div>
       </section>
 
       <section class="block" id="experience">
         <h2>Experience</h2>
         <div class="timeline">
-          <div class="item"><time>2024–Now</time><div><strong>Researcher — Hasselt University (Exchange)</strong><ul><li>In/operando electrochemistry; photocathode prototyping.</li><li>Rapid electrodeposition; collaborative projects.</li></ul></div></div>
-          <div class="item"><time>2021–2024</time><div><strong>Graduate Research Assistant — University of Siegen</strong><ul><li>WO₃ nanostructures; NH₄⁺ storage; heterojunction engineering.</li></ul></div></div>
-          <div class="item"><time>2021–2022</time><div><strong>Research Assistant — Tianjin University (ACELab)</strong></div></div>
+          <div class="item"><time>2024–Now</time><div><strong><span class="dot"></span>Researcher — Hasselt University (Exchange)</strong><ul><li>In/operando electrochemistry; photocathode prototyping.</li><li>Rapid electrodeposition; collaborative projects.</li></ul></div></div>
+          <div class="item"><time>2021–2024</time><div><strong><span class="dot"></span>Graduate Research Assistant — University of Siegen</strong><ul><li>WO₃ nanostructures; NH₄⁺ storage; heterojunction engineering.</li></ul></div></div>
+          <div class="item"><time>2021–2022</time><div><strong><span class="dot"></span>Research Assistant — Tianjin University (ACELab)</strong></div></div>
         </div>
       </section>
 
@@ -98,38 +150,49 @@
       </section>
 
       <section class="block" id="publications">
-        <h2>Publications</h2>
+        <h2>Selected Publications</h2>
         <ol>
           <li><strong>Folded Nanocrystalline‑Stacked WO₃ for Efficient Ammonium‑Ion Storage</strong> — Ximan Dong, Pei Li, Xinyue Chen, et al., <em>Advanced Functional Materials</em>, 2025 (under review).</li>
           <li><strong>Light‑Assisted Energy Storage Devices: Principles, Performance, and Perspectives</strong> — Ximan Dong, Xinyue Chen, Xin Jiang, Nianjun Yang, <em>Advanced Energy Materials</em>, 2023.</li>
           <li><strong>Diamond Composite: A “1 + 1 > 2” Strategy to Explore Advanced Functional Materials</strong> — Xinyue Chen, <u>Ximan Dong</u> (co‑first), Xin Jiang, Nianjun Yang, <em>Accounts of Materials Research</em>, 2024.</li>
           <li><strong>Matching electrode lengths enables the practical use of asymmetric fiber supercapacitors</strong> — Ximan Dong, et al., <em>Nano Energy</em>, 2021.</li>
         </ol>
-        <p class="muted">13 papers published, 4 as first author; 1 granted patent; 2 under submission.</p>
-      </section>
-
-      <section class="block" id="awards">
-        <h2>Honors & Awards</h2>
-        <ul>
-          <li>Multiple scholarships (Hebei Normal Univ. of Science & Technology; Tianjin Univ.)</li>
-          <li>Tianjin University “Outstanding Student” & “Excellent Thesis”</li>
-          <li>Excellent Graduate, Hebei Normal Univ. of Science & Technology</li>
-        </ul>
+        <p class="muted">13 papers published, 4 first‑author; 1 granted patent; 2 under submission.</p>
       </section>
 
       <section class="block" id="conferences">
-        <h2>Conferences & Service</h2>
+        <h2>Talks & Service</h2>
         <ul>
           <li>29th Hasselt Diamond Workshop — Oral (Belgium, 2025)</li>
           <li>34th Intl. Conf. on Diamond & Carbon Materials — Oral (Germany, 2024)</li>
           <li>E‑MRS Fall Meeting — Poster (Poland, 2024)</li>
           <li>1st Global Chinese Materials Conference — Staff (Belgium, 2025)</li>
-          <li>E‑MRS Fall Meeting — Staff (Poland, 2023)</li>
         </ul>
       </section>
 
       <footer class="muted" style="padding-top:8px">© 2025 Ximan Dong.</footer>
     </main>
   </div>
+
+  <script>
+    // 简易学术指标：编辑下方数字，或用 URL 参数 ?h=12&c=850
+    (function(){
+      const url=new URL(location.href);const H=url.searchParams.get('h');const C=url.searchParams.get('c');
+      const metrics={h:H||'—', c:C||'—'};document.getElementById('m-hindex').textContent=metrics.h;document.getElementById('m-citations').textContent=metrics.c;
+    })();
+  </script>
+  <script>
+    // 根据侧栏高度与视口高度自动切换：粘性/普通
+    (function(){
+      const aside=document.querySelector('.side');
+      function adjust(){
+        if(!aside) return;
+        const fits=(aside.offsetHeight+24)<=window.innerHeight; // 24 = 顶部间距
+        aside.classList.toggle('is-static', !fits);
+      }
+      window.addEventListener('load',adjust);
+      window.addEventListener('resize',adjust);
+    })();
+  </script>
 </body>
 </html>
