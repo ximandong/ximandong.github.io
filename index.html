@@ -56,10 +56,10 @@
 
     /* Timeline with icons */
     .timeline{position:relative;display:grid;gap:16px;margin-left:4px}
-    .timeline::before{content:"";position:absolute;left:10px;top:0;bottom:0;width:2px;background:linear-gradient(var(--accent),var(--accent2))}
+    .timeline::before{content:"";position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(var(--accent),var(--accent2))}
     .item{position:relative;display:grid;grid-template-columns:140px 1fr;gap:14px;padding-left:28px}
     .item time{color:var(--muted);font-variant-numeric:tabular-nums}
-    .item::before{content:"";position:absolute;left:2px;top:8px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--accent)}
+    .item::before{content:"";position:absolute;left:12px;top:8px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--accent)}
     .badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px;background:#fff;margin-left:6px}
     .dot{display:inline-block;width:7px;height:7px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2));margin-right:6px}
 
@@ -116,7 +116,7 @@
     <main>
       <section class="block" id="about">
         <h2>About</h2>
-        <p class="muted">My research focuses on light‑assisted ion storage, WO₃/TiO₂/BDD heterojunctions, and in/operando characterization. I aim to intrinsically couple light harvesting with ion storage in a single electrode.</p>
+        <p class="muted"> I am a joint Ph.D. candidate in Materials Engineering (University of Siegen) and Chemistry (Hasselt University). My research lies at the interface of light–matter interaction and electrochemical energy storage. I design tungsten-oxide and diamond-based photoelectrodes, build WO₃/TiO₂ and WO₃/BDD heterojunctions, and study their in/operando behaviour under illumination. Methodologically I combine rapid electrodeposition, magnetron sputtering and CVD growth with electrochemical testing and spectroscopic/structural characterization. I have authored works in <em>Advanced Energy Materials</em> (first-author, 2023), <em>Accounts of Materials Research</em> (co-first, 2024) and others, and delivered oral presentations at international conferences.</p>
       </section>
 
       <section class="block" id="education">
@@ -129,14 +129,42 @@
         </div>
       </section>
 
-      <section class="block" id="projects">
-        <h2>Projects</h2>
-        <ul>
-          <li><strong>Controlled growth and application of nanocrystalline WO₃</strong> — Synthesis and morphology control applied to NH₄⁺ storage (620 mWh·cm⁻², AFM under review).</li>
-          <li><strong>Design and optimization of photo‑assisted composite electrodes</strong> — WO₃/TiO₂ and WO₃/BDD heterojunctions, improved energy density & cycling stability.</li>
-          <li><strong>Flexible diamond electrode fabrication</strong> — Uniform flexible diamond films for storage and sensing.</li>
-        </ul>
-      </section>
+      <<section class="block" id="projects">
+  <h2>Projects</h2>
+  <ul>
+    <li>
+      <strong>Programmable Electrodeposition for Rapid NH₄⁺-Storage Electrodes</strong>
+      <ul>
+        <li><em>First</em> to regulate electrodeposition nucleation/growth to form nanocrystalline WO₃-based networks; a full electrode can be fabricated in <strong>≈1000 s</strong>.</li>
+        <li>Architecture engineered for <strong>fast ion diffusion and electronic transport</strong> (open porous paths + short diffusion length + continuous electron pathways).</li>
+        <li>Demonstrated high areal energy density (up to <strong>620 mWh·cm⁻²</strong>) and robust cycling as an <strong>NH₄⁺-storage</strong> cathode.</li>
+        <li>Toolkit: potential/pulse programming, bath chemistry tuning, post-conversion to phase-pure WO₃.</li> 
+        <li><strong>Status:</strong> Submitted to <em>Advanced Functional Materials</em> (2025).</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Photo-Assisted Ammonium-Ion Battery (PA-AIB)</strong>
+      <ul>
+        <li>Built photocathodes with <strong>WO₃/TiO₂</strong> and <strong>WO₃/BDD</strong> heterojunctions to achieve favorable band alignment and efficient charge separation.</li>
+        <li>Under illumination, generated <strong>photovoltage</strong> lowers charge-transfer resistance and boosts capacity/rate for NH₄⁺ storage.</li>
+        <li><strong>In/operando</strong> electrochemistry & spectroscopy used to quantify light-coupled kinetics and state evolution.</li>
+        <li>Delivered device-level prototypes showing stable light-enhanced output under practical intensities.</li>
+        <li><strong>Status:</strong> In preparation.</li>
+      </ul>
+    </li>
+
+    <li>
+      <strong>Diamond Electrochemistry & Flexible “Diamond-Cloth” Devices</strong>
+      <ul>
+        <li>Explored <strong>interlayer-affected diamond electrochemistry</strong>; grew transferable/flexible diamond films via CVD and integrated with current collectors.</li>
+        <li>Developed <strong>diamond-cloth</strong> electrodes for durable supercapacitors; validated bending durability and long-term stability.</li>
+        <li>Contributions linked to works in <em>Small Methods</em> (2025) and <em>J. Phys. Chem. C</em> (2025).</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
 
  <section class="block" id="publications">
   <h2>Publications
