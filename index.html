@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,21 +9,23 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🎓</text></svg>">
   <style>
     :root{
-      --bg:#0b1220;--text:#e5e7eb;--muted:#a3a3a3;--card:#0d1b2a;--border:rgba(255,255,255,.12);--accent:#60a5fa;
-      --l-bg:#ffffff;--l-text:#0f172a;--l-muted:#475569;--l-card:#f8fafc;--l-border:#e2e8f0;
+      --bg:#0b1220;--text:#e5e7eb;--muted:#a3a3a3;--border:rgba(255,255,255,.12);
+      --l-bg:#ffffff;--l-text:#0f172a;--l-muted:#475569;--l-border:#e2e8f0;
     }
     html{scroll-behavior:smooth}
     body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6;background:var(--bg);color:var(--text)}
     a{color:var(--text)} a:hover{opacity:.9}
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);border-bottom:1px solid var(--border);background:color-mix(in srgb, var(--bg) 75%, transparent)}
-    nav{max-width:1180px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-    nav .links a{margin:0 8px;text-decoration:none}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid var(--border);text-decoration:none}
+    nav{max-width:1180px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:50px;height:50px;border-radius:50%;object-fit:cover}
+    .brand-info{display:flex;flex-direction:column}
+    .brand-info .name{font-size:24px;font-weight:800;margin:0}
+    .brand-info .role{color:var(--muted);font-size:14px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:12px;border:1px solid var(--border);text-decoration:none}
     .page{display:grid;grid-template-columns:300px 1fr;gap:24px;max-width:1180px;margin:0 auto;padding:24px}
-    .sidebar{position:sticky;top:84px;align-self:start;border:1px solid var(--border);border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));padding:20px}
-    .avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#60a5fa,#34d399);margin-bottom:10px}
-    .name{font-size:26px;font-weight:800;margin:8px 0}
-    .role{color:var(--muted)}
+    .sidebar{position:sticky;top:92px;align-self:start;border:1px solid var(--border);border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));padding:20px}
+    .sidebar img{width:100%;height:auto;border-radius:16px}
     .section{border:1px solid var(--border);border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));padding:22px;margin-bottom:18px}
     h2{font-size:22px;margin:0 0 12px}
     h3{font-size:18px;margin:8px 0}
@@ -32,59 +34,28 @@
     .item{display:grid;grid-template-columns:120px 1fr;gap:12px}
     .item time{color:var(--muted);font-variant-numeric:tabular-nums}
     ol{padding-left:20px}
-
-    /* light mode */
     @media (prefers-color-scheme: light){
-      body:not(.force-dark){background:var(--l-bg);color:var(--l-text)}
-      body:not(.force-dark) .sidebar, body:not(.force-dark) .section{background:#fff;border:1px solid var(--l-border)}
-      body:not(.force-dark) nav{background:color-mix(in srgb, var(--l-bg) 75%, transparent);border-bottom:1px solid var(--l-border)}
-      body:not(.force-dark) .role, body:not(.force-dark) time, body:not(.force-dark) footer{color:var(--l-muted)}
+      body{background:var(--l-bg);color:var(--l-text)}
+      .sidebar,.section{background:#fff;border:1px solid var(--l-border)}
+      nav{background:color-mix(in srgb, var(--l-bg) 75%, transparent);border-bottom:1px solid var(--l-border)}
+      .role,time,footer{color:var(--l-muted)}
     }
-
-    /* responsive */
     @media (max-width:980px){.page{grid-template-columns:1fr}.sidebar{position:static}}
-    @media print{
-      header, .controls{display:none}
-      .page{grid-template-columns:1fr;gap:10px;padding:0}
-      .section, .sidebar{border:none;background:transparent;padding:0}
-      a{text-decoration:none;color:inherit}
-    }
   </style>
-  <script>
-    document.addEventListener('DOMContentLoaded',()=>{
-      const $=(s)=>document.querySelector(s);const $$=(s)=>document.querySelectorAll(s);
-      const savedLang=localStorage.getItem('lang')||'zh';
-      const savedTheme=localStorage.getItem('theme')||'auto';
-      const L={
-        zh:{brand:"董茜曼",role:"材料科学 · 能源存储 · 光电化学",about:"我的研究聚焦于光驱动储能、WO₃/TiO₂/BDD 异质结与原位/准原位表征。目标是将光吸收与离子存储在同一电极内原位耦合。",contact:"联系我",download:"下载简历",interests:"研究兴趣",skills:"技能",education:"教育",experience:"经历",publications:"论文与出版物",teaching:"教学与指导",awards:"荣誉与获奖",service:"学术服务",projects:"项目",links:"链接",emailPref:"更偏好邮件沟通，欢迎合作。",footer:"© "+new Date().getFullYear()+" 董茜曼. All rights reserved."},
-        en:{brand:"Ximan Dong",role:"Materials Science · Energy Storage · Photoelectrochemistry",about:"My research focuses on light-assisted storage, WO₃/TiO₂/BDD heterojunctions, and in/operando characterization. I aim to intrinsically couple light harvesting with ion storage in a single electrode.",contact:"Email Me",download:"Download CV",interests:"Interests",skills:"Skills",education:"Education",experience:"Experience",publications:"Publications",teaching:"Teaching & Mentoring",awards:"Honors & Awards",service:"Academic Service",projects:"Projects",links:"Links",emailPref:"Email preferred. Open to collaboration.",footer:"© "+new Date().getFullYear()+" Ximan Dong. All rights reserved."}
-      };
-      function applyLang(lang){$$('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(L[lang]&&L[lang][k]!==undefined) el.textContent=L[lang][k];});localStorage.setItem('lang',lang);$('#btn-zh').classList.toggle('active',lang==='zh');$('#btn-en').classList.toggle('active',lang==='en');}
-      function applyTheme(mode){document.body.classList.toggle('force-dark',mode==='dark');localStorage.setItem('theme',mode);['auto','light','dark'].forEach(id=>{const b=document.getElementById('theme-'+id);if(b) b.classList.toggle('active',id===mode);});}
-      // init
-      $('#btn-zh').addEventListener('click',()=>applyLang('zh'));
-      $('#btn-en').addEventListener('click',()=>applyLang('en'));
-      $('#theme-auto').addEventListener('click',()=>applyTheme('auto'));
-      $('#theme-light').addEventListener('click',()=>applyTheme('light'));
-      $('#theme-dark').addEventListener('click',()=>applyTheme('dark'));
-      applyLang(savedLang);applyTheme(savedTheme);
-    });
-  </script>
 </head>
 <body>
   <header>
     <nav>
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="avatar" aria-hidden="true"></div>
-        <div>
-          <div class="name" data-i18n="brand">董茜曼</div>
-          <div class="role" data-i18n="role">材料科学 · 能源存储 · 光电化学</div>
+      <div class="brand">
+        <img src="./meme.jpg" alt="Profile"/>
+        <div class="brand-info">
+          <div class="name">Ximan Dong</div>
+          <div class="role">Materials Science · Energy Storage · Photoelectrochemistry</div>
         </div>
       </div>
-      <div class="controls" style="display:flex;align-items:center;gap:10px">
-        <div class="switch"><button id="btn-zh" class="btn active">中文</button><button id="btn-en" class="btn">EN</button></div>
-        <div class="switch"><button id="theme-auto" class="btn active">Auto</button><button id="theme-light" class="btn">Light</button><button id="theme-dark" class="btn">Dark</button></div>
-        <a class="btn" href="./CV.pdf" data-i18n="download" download>下载简历</a>
+      <div>
+        <a class="btn" href="mailto:ximan.dong@outlook.com">Email Me</a>
+        <a class="btn" href="./CV.pdf" download>Download CV</a>
       </div>
     </nav>
   </header>
@@ -92,15 +63,14 @@
   <main class="page">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <img src="me.jpg" alt="Profile photo" style="width:100%;height:auto;border-radius:16px"/>
-      <div class="name" style="margin-top:10px" data-i18n="brand">董茜曼</div>
-      <div class="role" data-i18n="role">材料科学 · 能源存储 · 光电化学</div>
+      <img src="./meme.jpg" alt="Profile photo"/>
+      <div class="name">Ximan Dong</div>
+      <div class="role">PhD Candidate · Materials Science</div>
       <div style="margin:10px 0">
-        <a class="btn" href="mailto:ximan.dong@outlook.com" data-i18n="contact">联系我</a>
+        <a class="btn" href="mailto:ximan.dong@outlook.com">Email Me</a>
       </div>
-      <p class="role" data-i18n="emailPref">更偏好邮件沟通，欢迎合作。</p>
       <div class="section">
-        <h2 data-i18n="interests">研究兴趣</h2>
+        <h2>Research Interests</h2>
         <div>
           <span class="pill">WO₃ / TiO₂</span>
           <span class="pill">BDD / Diamond</span>
@@ -110,7 +80,7 @@
         </div>
       </div>
       <div class="section">
-        <h2 data-i18n="skills">技能</h2>
+        <h2>Skills</h2>
         <div>
           <span class="pill">Electrodeposition</span>
           <span class="pill">Magnetron Sputtering</span>
@@ -122,7 +92,7 @@
         </div>
       </div>
       <div class="section">
-        <h2 data-i18n="links">链接</h2>
+        <h2>Links</h2>
         <ul style="list-style:none;padding:0;margin:0;display:grid;gap:6px">
           <li>📧 <a href="mailto:ximan.dong@outlook.com">ximan.dong@outlook.com</a></li>
           <li>🐙 <a href="https://github.com/ximandong" target="_blank">github.com/ximandong</a></li>
@@ -135,44 +105,44 @@
     <section>
       <div class="section">
         <h2>About</h2>
-        <p data-i18n="about">我的研究聚焦于光驱动储能、WO₃/TiO₂/BDD 异质结与原位表征。目标是将光吸收与离子存储在同一电极内原位耦合。</p>
+        <p>My research focuses on light-assisted storage, WO₃/TiO₂/BDD heterojunctions, and in/operando characterization. I aim to intrinsically couple light harvesting with ion storage in a single electrode.</p>
       </div>
 
       <div class="section" id="education">
-        <h2 data-i18n="education">教育</h2>
+        <h2>Education</h2>
         <div class="timeline">
           <div class="item">
             <time>2022–2026</time>
             <div>
-              <h3>博士 · 材料工程 — 锡根大学（德国）</h3>
-              <p class="role">导师：Prof. Xin Jiang</p>
+              <h3>PhD, Materials Engineering — University of Siegen (Germany)</h3>
+              <p class="role">Supervisor: Prof. Xin Jiang</p>
             </div>
           </div>
           <div class="item">
             <time>2022–2026</time>
             <div>
-              <h3>博士 · 化学 — 哈塞尔特大学（比利时）</h3>
-              <p class="role">导师：Prof. Nianjun Yang, Prof. Ken Haenen</p>
+              <h3>PhD, Chemistry — Hasselt University (Belgium)</h3>
+              <p class="role">Supervisors: Prof. Nianjun Yang, Prof. Ken Haenen</p>
             </div>
           </div>
           <div class="item">
             <time>2017–2021</time>
             <div>
-              <h3>硕士 · 电化学 — 天津大学</h3>
-              <p class="role">导师：Prof. Ying Tao, Prof. Quan‑Hong Yang</p>
+              <h3>MSc, Electrochemistry — Tianjin University</h3>
+              <p class="role">Supervisors: Prof. Ying Tao, Prof. Quan-Hong Yang</p>
             </div>
           </div>
           <div class="item">
             <time>2013–2017</time>
             <div>
-              <h3>学士 · 应用化学 — 河北科技师范学院</h3>
+              <h3>BSc, Applied Chemistry — Hebei Normal University of Science & Technology</h3>
             </div>
           </div>
         </div>
       </div>
 
       <div class="section" id="experience">
-        <h2 data-i18n="experience">经历</h2>
+        <h2>Experience</h2>
         <div class="timeline">
           <div class="item">
             <time>2024–Now</time>
@@ -203,62 +173,54 @@
       </div>
 
       <div class="section" id="projects">
-        <h2 data-i18n="projects">项目</h2>
+        <h2>Projects</h2>
         <ul>
-          <li><strong>纳米氧化钨颗粒的可控生长与应用</strong> — 合成与形貌调控，应用于 NH₄⁺ 储能（能量密度达 620 mWh·cm⁻²，AFM 审稿中）。</li>
-          <li><strong>光辅助复合电极设计与优化</strong> — 构建 WO₃/TiO₂、WO₃/BDD 异质结，显著提升能量密度与循环稳定性。</li>
-          <li><strong>柔性金刚石电极的生长与制备</strong> — 制备柔性钻石膜，探索储能与传感应用。</li>
+          <li><strong>Controlled growth and application of nanocrystalline WO₃</strong> — Synthesis and morphology control applied to NH₄⁺ storage (achieving 620 mWh·cm⁻², AFM under review).</li>
+          <li><strong>Design and optimization of photo-assisted composite electrodes</strong> — Constructing WO₃/TiO₂ and WO₃/BDD heterojunctions, significantly improving energy density and cycling stability.</li>
+          <li><strong>Flexible diamond electrode fabrication</strong> — Achieved uniform flexible diamond films, exploring applications in energy storage and sensors.</li>
         </ul>
       </div>
 
       <div class="section" id="publications">
-        <h2 data-i18n="publications">论文与出版物</h2>
+        <h2>Publications</h2>
         <ol>
           <li>
-            <strong>Folded Nanocrystalline‑Stacked WO₃ for Efficient Ammonium‑Ion Storage</strong><br/>
+            <strong>Folded Nanocrystalline-Stacked WO₃ for Efficient Ammonium-Ion Storage</strong><br/>
             Ximan Dong, Pei Li, Xinyue Chen, et al. · <em>Advanced Functional Materials</em>, 2025 (under review)
           </li>
           <li>
-            <strong>Light‑Assisted Energy Storage Devices: Principles, Performance, and Perspectives</strong><br/>
+            <strong>Light-Assisted Energy Storage Devices: Principles, Performance, and Perspectives</strong><br/>
             Ximan Dong, Xinyue Chen, Xin Jiang, Nianjun Yang · <em>Advanced Energy Materials</em>, 2023
           </li>
           <li>
             <strong>Diamond Composite: A “1 + 1 > 2” Strategy to Design and Explore Advanced Functional Materials</strong><br/>
-            Xinyue Chen, <u>Ximan Dong</u> (co‑first), Xin Jiang, Nianjun Yang · <em>Accounts of Materials Research</em>, 2024
+            Xinyue Chen, <u>Ximan Dong</u> (co-first), Xin Jiang, Nianjun Yang · <em>Accounts of Materials Research</em>, 2024
           </li>
           <li>
             <strong>Matching electrode lengths enables the practical use of asymmetric fiber supercapacitors with a high energy density</strong><br/>
             Ximan Dong, et al. · <em>Nano Energy</em>, 2021
           </li>
         </ol>
-        <p class="role">共发表 13 篇论文，一作 4 篇；授权专利 1 项；在投 2 篇。</p>
-      </div>
-
-      <div class="section" id="teaching">
-        <h2 data-i18n="teaching">教学与指导</h2>
-        <ul>
-          <li>2024 – Guest TA, Electrochemistry Lab, Hasselt University</li>
-          <li>2023 – Mentor, Undergraduate research projects</li>
-        </ul>
+        <p class="role">13 papers published, 4 as first author; 1 granted patent; 2 under submission.</p>
       </div>
 
       <div class="section" id="awards">
-        <h2 data-i18n="awards">荣誉与获奖</h2>
+        <h2>Honors & Awards</h2>
         <ul>
-          <li>学业奖学金（河北科技师范学院、天津大学）</li>
-          <li>天津大学三好学生、优秀毕业论文</li>
-          <li>河北科技师范学院优秀毕业生、优秀毕业论文</li>
+          <li>Multiple scholarships (Hebei Normal University of Science & Technology, Tianjin University)</li>
+          <li>Tianjin University “Outstanding Student” & “Excellent Thesis”</li>
+          <li>Excellent Graduate, Hebei Normal University of Science & Technology</li>
         </ul>
       </div>
 
-      <div class="section" id="service">
-        <h2 data-i18n="service">学术服务 & 会议</h2>
+      <div class="section" id="conferences">
+        <h2>Conferences & Service</h2>
         <ul>
           <li>29th Hasselt Diamond Workshop — Oral (Belgium, 2025)</li>
           <li>34th International Conference on Diamond and Carbon Materials — Oral (Germany, 2024)</li>
-          <li>E‑MRS Fall Meeting — Poster (Poland, 2024)</li>
+          <li>E-MRS Fall Meeting — Poster (Poland, 2024)</li>
           <li>1st Global Chinese Materials Conference — Staff (Belgium, 2025)</li>
-          <li>E‑MRS Fall Meeting — Staff (Poland, 2023)</li>
+          <li>E-MRS Fall Meeting — Staff (Poland, 2023)</li>
         </ul>
       </div>
 
@@ -266,7 +228,7 @@
   </main>
 
   <footer style="max-width:1180px;margin:10px auto 28px;padding:0 24px;color:var(--muted)">
-    <p data-i18n="footer">© YEAR 董茜曼. All rights reserved.</p>
+    <p>© 2025 Ximan Dong. All rights reserved.</p>
   </footer>
 </body>
 </html>
