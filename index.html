@@ -3,95 +3,201 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ximan Dong | Academic CV</title>
-  <meta name="description" content="Academic CV – Research, Publications, Teaching, Service" />
+  <title>Ximan Dong — Academic Profile</title>
+  <meta name="description" content="Academic profile of Ximan Dong — Materials Science, Energy Storage & Photoelectrochemistry" />
   <meta name="theme-color" content="#0f172a" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>⚛️</text></svg>">
   <style>
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6;background:#ffffff;color:#0f172a;max-width:800px;margin:auto;padding:20px}
-    img{max-width:100%;border-radius:12px}
-    h1{font-size:32px;margin-bottom:4px}
-    h2{font-size:22px;margin-top:32px;margin-bottom:8px;border-bottom:2px solid #ddd;padding-bottom:4px}
-    h3{font-size:18px;margin:8px 0}
-    .muted{color:#555}
-    ul,ol{padding-left:20px}
-    a{color:#2563eb;text-decoration:none}
-    a:hover{text-decoration:underline}
-    .top{display:flex;align-items:center;gap:20px;margin-bottom:20px}
-    .top img{width:160px;height:160px;object-fit:cover;border-radius:8px}
+    :root{
+      --bg:#0b1220; --text:#e5e7eb; --muted:#9aa4b2; --card:#111a2b; --line:rgba(255,255,255,.12);
+      --accent:#7dd3fc; --accent-2:#a78bfa; --max:1000px;
+      --l-bg:#ffffff; --l-text:#0f172a; --l-muted:#475569; --l-card:#ffffff; --l-line:#e5e7eb;
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6;background:var(--bg);color:var(--text)}
+
+    /* container */
+    .wrap{max-width:var(--max);margin:0 auto;padding:24px}
+
+    /* header */
+    header{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--bg) 80%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+    .dot{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+    .links a{color:inherit;text-decoration:none;margin:0 8px;opacity:.86}
+    .links a:hover{opacity:1}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);text-decoration:none;color:inherit}
+    .btn:hover{box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 45%, transparent)}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:40px 0}
+    .card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border-radius:var(--radius);padding:22px}
+    .hero h1{font-size:38px;line-height:1.15;margin:6px 0 8px}
+    .role{color:var(--muted)}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .tag{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px dashed var(--line);font-size:13px}
+    .avatar{aspect-ratio:1/1;width:100%;border-radius:16px;object-fit:cover;background:#0a0f1d}
+
+    /* sections */
+    section{margin-top:16px}
+    h2{font-size:22px;margin:0 0 12px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .list{display:grid;gap:10px}
+    .timeline{display:grid;gap:14px}
+    .row{display:grid;grid-template-columns:140px 1fr;gap:14px}
+    time{color:var(--muted);font-variant-numeric:tabular-nums}
+
+    /* publications */
+    ol.pubs{padding-left:20px}
+    ol.pubs li{margin:6px 0}
+
+    /* footer */
+    footer{border-top:1px dashed var(--line);padding:22px 0;margin-top:26px;color:var(--muted)}
+
+    /* light scheme */
+    @media (prefers-color-scheme: light){
+      body{background:var(--l-bg);color:var(--l-text)}
+      .card{background:var(--l-card);border:1px solid var(--l-line)}
+      header{background:color-mix(in srgb, var(--l-bg) 85%, transparent);border-bottom:1px solid var(--l-line)}
+      .role, time, footer{color:var(--l-muted)}
+      .btn{border:1px solid var(--l-line)}
+      .tag{border-color:var(--l-line)}
+    }
+
+    /* responsive */
+    @media (max-width:900px){.hero{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="top">
-    <img src="./me.jpg" alt="Profile photo"/>
-    <div>
-      <h1>Ximan Dong</h1>
-      <p class="muted">PhD Candidate · Materials Science · Energy Storage & Photoelectrochemistry</p>
-      <p>📧 <a href="mailto:ximan.dong@outlook.com">ximan.dong@outlook.com</a></p>
-      <p><a href="./cv.pdf" download>📄 Download CV</a></p>
+  <header>
+    <div class="wrap">
+      <nav>
+        <div class="brand"><span class="dot"></span> <span>Ximan Dong</span></div>
+        <div class="links">
+          <a href="#about">About</a>
+          <a href="#education">Education</a>
+          <a href="#publications">Publications</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div>
+          <a class="btn" href="./cv.pdf" download>Download CV</a>
+        </div>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <h2>About</h2>
-  <p>My research focuses on light-assisted storage, WO₃/TiO₂/BDD heterojunctions, and in/operando characterization. I aim to intrinsically couple light harvesting with ion storage in a single electrode.</p>
+  <main class="wrap">
+    <!-- hero -->
+    <section class="hero" id="about">
+      <div class="card">
+        <span class="tag">Materials Science · Energy Storage · Photoelectrochemistry</span>
+        <h1>Hi, I’m Ximan Dong</h1>
+        <p class="role">I study light‑assisted ion storage, heterojunction engineering (WO₃/TiO₂/BDD), and in/operando characterization to intrinsically couple light harvesting with charge storage in a single electrode.</p>
+        <div class="meta">
+          <span class="tag">WO₃ / TiO₂</span>
+          <span class="tag">BDD / Diamond</span>
+          <span class="tag">NH₄⁺ storage</span>
+          <span class="tag">Heterojunctions</span>
+          <span class="tag">In/operando</span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          <a class="btn" href="mailto:ximan.dong@outlook.com">Email</a>
+          <a class="btn" href="https://github.com/ximandong" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn" href="https://scholar.google.com" target="_blank" rel="noreferrer">Google Scholar</a>
+        </div>
+      </div>
+      <div class="card">
+        <img class="avatar" src="./me.jpg" alt="Portrait of Ximan Dong" />
+        <p class="role" style="margin-top:8px">Replace <code>me.jpg</code> with your portrait (ideally 800×800).</p>
+      </div>
+    </section>
 
-  <h2>Education</h2>
-  <ul>
-    <li><strong>PhD, Materials Engineering</strong> — University of Siegen (Germany), 2022–2026. Supervisor: Prof. Xin Jiang</li>
-    <li><strong>PhD, Chemistry</strong> — Hasselt University (Belgium), 2022–2026. Supervisors: Prof. Nianjun Yang, Prof. Ken Haenen</li>
-    <li><strong>MSc, Electrochemistry</strong> — Tianjin University, 2017–2021. Supervisors: Prof. Ying Tao, Prof. Quan‑Hong Yang</li>
-    <li><strong>BSc, Applied Chemistry</strong> — Hebei Normal University of Science & Technology, 2013–2017</li>
-  </ul>
+    <!-- education & highlights -->
+    <section class="grid-2" id="education">
+      <div class="card">
+        <h2>Education</h2>
+        <div class="timeline">
+          <div class="row">
+            <time>2022–2026</time>
+            <div><strong>PhD, Materials Engineering</strong> — University of Siegen (Germany)<br><span class="role">Advisor: Prof. Xin Jiang</span></div>
+          </div>
+          <div class="row">
+            <time>2022–2026</time>
+            <div><strong>PhD, Chemistry</strong> — Hasselt University (Belgium)<br><span class="role">Advisors: Prof. Nianjun Yang · Prof. Ken Haenen</span></div>
+          </div>
+          <div class="row">
+            <time>2017–2021</time>
+            <div><strong>MSc, Electrochemistry</strong> — Tianjin University<br><span class="role">Advisors: Prof. Ying Tao · Prof. Quan‑Hong Yang</span></div>
+          </div>
+          <div class="row">
+            <time>2013–2017</time>
+            <div><strong>BSc, Applied Chemistry</strong> — Hebei Normal Univ. of Sci & Tech</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Highlights</h2>
+        <ul class="list">
+          <li>13 papers (4 first‑author), 1 granted patent, 2 under submission</li>
+          <li>AFM submission: Folded nanocrystalline‑stacked WO₃ for NH₄⁺ storage</li>
+          <li>Talks: Hasselt Diamond Workshop 2025; DCM 2024</li>
+        </ul>
+      </div>
+    </section>
 
-  <h2>Experience</h2>
-  <ul>
-    <li><strong>Researcher</strong> — Hasselt University (Exchange), 2024–Now
-      <ul>
-        <li>In/operando electrochemistry; photocathode prototyping.</li>
-        <li>Rapid electrodeposition; collaborative projects.</li>
+    <!-- publications -->
+    <section class="card" id="publications">
+      <h2>Selected Publications</h2>
+      <ol class="pubs">
+        <li><strong>Folded Nanocrystalline‑Stacked WO₃ for Efficient Ammonium‑Ion Storage</strong>. X. Dong, P. Li, X. Chen, et al. <em>Adv. Funct. Mater.</em> 2025 (under review).</li>
+        <li><strong>Light‑Assisted Energy Storage Devices: Principles, Performance, and Perspectives</strong>. X. Dong, X. Chen, X. Jiang, N. Yang. <em>Adv. Energy Mater.</em> 2023.</li>
+        <li><strong>Diamond Composite: A “1 + 1 > 2” Strategy…</strong> X. Chen, <u>X. Dong</u> (co‑first), X. Jiang, N. Yang. <em>Acc. Mater. Res.</em> 2024.</li>
+        <li><strong>Matching electrode lengths enables…</strong> X. Dong, et al. <em>Nano Energy</em> 2021.</li>
+      </ol>
+      <p class="role">Full list available upon request or on Google Scholar.</p>
+    </section>
+
+    <!-- projects & talks -->
+    <section class="grid-2" id="projects">
+      <div class="card">
+        <h2>Projects</h2>
+        <ul class="list">
+          <li><strong>Photo‑assisted composite electrodes</strong> — WO₃/TiO₂ & WO₃/BDD heterojunctions for higher energy density and stability.</li>
+          <li><strong>Flexible diamond electrodes</strong> — Uniform films for energy devices & sensors.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Talks & Service</h2>
+        <ul class="list">
+          <li>29th Hasselt Diamond Workshop — Oral (Belgium, 2025)</li>
+          <li>34th Intl. Conf. on Diamond & Carbon Materials — Oral (Germany, 2024)</li>
+          <li>E‑MRS Fall Meeting — Poster (Poland, 2024)</li>
+          <li>1st Global Chinese Materials Conference — Staff (Belgium, 2025)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- contact -->
+    <section class="card" id="contact">
+      <h2>Contact</h2>
+      <p>Email is preferred. Open to collaboration.</p>
+      <ul class="list">
+        <li>📧 <a href="mailto:ximan.dong@outlook.com">ximan.dong@outlook.com</a></li>
+        <li>🐙 <a href="https://github.com/ximandong" target="_blank">github.com/ximandong</a></li>
+        <li>🎓 <a href="https://scholar.google.com" target="_blank">Google Scholar</a></li>
       </ul>
-    </li>
-    <li><strong>Graduate Research Assistant</strong> — University of Siegen, 2021–2024
-      <ul>
-        <li>WO₃ nanostructures; NH₄⁺ storage; heterojunction engineering.</li>
-      </ul>
-    </li>
-    <li><strong>Research Assistant</strong> — Tianjin University (ACELab), 2021–2022</li>
-  </ul>
+    </section>
 
-  <h2>Projects</h2>
-  <ul>
-    <li><strong>Controlled growth and application of nanocrystalline WO₃</strong> — Synthesis and morphology control applied to NH₄⁺ storage (achieving 620 mWh·cm⁻², AFM under review).</li>
-    <li><strong>Design and optimization of photo-assisted composite electrodes</strong> — Constructing WO₃/TiO₂ and WO₃/BDD heterojunctions, significantly improving energy density and cycling stability.</li>
-    <li><strong>Flexible diamond electrode fabrication</strong> — Achieved uniform flexible diamond films, exploring applications in energy storage and sensors.</li>
-  </ul>
+    <footer>
+      © <span id="y"></span> Ximan Dong. All rights reserved.
+    </footer>
+  </main>
 
-  <h2>Publications</h2>
-  <ol>
-    <li><strong>Folded Nanocrystalline-Stacked WO₃ for Efficient Ammonium-Ion Storage</strong><br/>Ximan Dong, Pei Li, Xinyue Chen, et al. · <em>Advanced Functional Materials</em>, 2025 (under review)</li>
-    <li><strong>Light-Assisted Energy Storage Devices: Principles, Performance, and Perspectives</strong><br/>Ximan Dong, Xinyue Chen, Xin Jiang, Nianjun Yang · <em>Advanced Energy Materials</em>, 2023</li>
-    <li><strong>Diamond Composite: A “1 + 1 > 2” Strategy to Design and Explore Advanced Functional Materials</strong><br/>Xinyue Chen, <u>Ximan Dong</u> (co‑first), Xin Jiang, Nianjun Yang · <em>Accounts of Materials Research</em>, 2024</li>
-    <li><strong>Matching electrode lengths enables the practical use of asymmetric fiber supercapacitors with a high energy density</strong><br/>Ximan Dong, et al. · <em>Nano Energy</em>, 2021</li>
-  </ol>
-  <p class="muted">13 papers published, 4 as first author; 1 granted patent; 2 under submission.</p>
-
-  <h2>Honors & Awards</h2>
-  <ul>
-    <li>Multiple scholarships (Hebei Normal University of Science & Technology, Tianjin University)</li>
-    <li>Tianjin University “Outstanding Student” & “Excellent Thesis”</li>
-    <li>Excellent Graduate, Hebei Normal University of Science & Technology</li>
-  </ul>
-
-  <h2>Conferences & Service</h2>
-  <ul>
-    <li>29th Hasselt Diamond Workshop — Oral (Belgium, 2025)</li>
-    <li>34th International Conference on Diamond and Carbon Materials — Oral (Germany, 2024)</li>
-    <li>E-MRS Fall Meeting — Poster (Poland, 2024)</li>
-    <li>1st Global Chinese Materials Conference — Staff (Belgium, 2025)</li>
-    <li>E-MRS Fall Meeting — Staff (Poland, 2023)</li>
-  </ul>
-
-  <footer style="margin-top:40px;font-size:14px;color:#555">
-    © 2025 Ximan Dong. All rights reserved.
-  </footer>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
