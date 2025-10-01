@@ -7,13 +7,19 @@
   <meta name="description" content="Academic CV – Research, Publications, Talks, Awards" />
   <style>
     :root{
-      /* Nature/Cell 风格：留白 + 学术蓝/紫 */
+      /* Theme */
       --bg:#ffffff;--text:#0f172a;--muted:#64748b;--line:#e5e7eb;
-      --accent:#3b82f6; /* blue */
-      --accent2:#8b5cf6;/* purple */
+      --accent:#3b82f6; --accent2:#8b5cf6;
       --chip:#f3f6fb;--chip-text:#0b1220;
       --radius:18px;--max:1100px;
+
+      /* Timeline (you can tweak these 3) */
+      --tl-x: 28px;   /* position of the vertical line — move right/left here */
+      --tl-dot: 12px; /* dot diameter (without border) */
+      --tl-b: 2px;    /* dot border width */
+      --tl-gap: 12px; /* extra gap between line/dot and text column */
     }
+
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
     h1,h2{font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;letter-spacing:.2px}
@@ -25,21 +31,18 @@
 
     /* Sidebar */
     .side{position:sticky;top:24px;align-self:start;text-align:center;padding-inline:14px}
-    .avatar-wrap{padding:0 18px} /* 左右留白 */
+    .avatar-wrap{padding:0 18px}
     .photo{width:160px;height:160px;object-fit:cover;border-radius:50%;display:block;margin:0 auto 12px;border:3px solid #fff;box-shadow:0 6px 24px rgba(15,23,42,.12)}
-    
     .tag{color:var(--muted);margin:0 0 14px}
     .pillrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 18px}
     .pill{padding:6px 10px;border-radius:999px;background:var(--chip);color:var(--chip-text);font-size:12px;border:1px solid var(--line)}
 
-    /* icon row for contact */
+    /* Contact icons */
     .icon-row{display:flex;justify-content:center;gap:14px;margin:10px 0 18px}
     .icon-row a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:999px;border:1px solid var(--line);background:#fff;box-shadow:0 2px 10px rgba(2,6,23,.06)}
     .icon-row a:hover{box-shadow:0 0 0 3px rgba(59,130,246,.2)}
     .icon{width:18px;height:18px;fill:#0b1220}
-
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;background:linear-gradient(180deg,#111827,#0b1220);color:#fff;text-decoration:none}
-    .btn.secondary{background:#f3f4f6;color:#111827}
 
     /* Metrics */
     .metrics{display:flex;justify-content:center;gap:10px;margin-top:6px}
@@ -54,29 +57,48 @@
     .block{padding:0 0 10px;border-bottom:1px solid var(--line)}
     ul,ol{margin:8px 0 0 20px}
 
-    /* Timeline with icons */
-.timeline{position:relative;display:grid;gap:16px;margin-left:4px}
-.timeline::before{
-  content:"";position:absolute;left:20px;top:0;bottom:0;width:2px;
-  background:linear-gradient(var(--accent),var(--accent2))
-}
-.item{
-  position:relative;display:grid;grid-template-columns:140px 1fr;gap:14px;
-  padding-left:38px; /* 20 + (12/2 + 2) + 10(额外间距) = 38 */
-}
-.item time{color:var(--muted);font-variant-numeric:tabular-nums}
-.item::before{
-  content:"";position:absolute;
-  left:12px; /* 20 - (12/2 + 2) = 12 → 圆心=20px */
-  top:8px;width:12px;height:12px;border-radius:50%;
-  background:#fff;border:2px solid var(--accent)
-}
-.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px;background:#fff;margin-left:6px}
-.dot{display:inline-block;width:7px;height:7px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2));margin-right:6px}
-
-
+    /* === Timeline (centered dots) === */
+    .timeline{position:relative;display:grid;gap:16px;margin-left:0}
+    .timeline::before{
+      content:"";position:absolute;left:var(--tl-x);top:0;bottom:0;width:2px;
+      background:linear-gradient(var(--accent),var(--accent2));
+    }
+    .item{
+      position:relative;display:grid;grid-template-columns:140px 1fr;gap:14px;
+      padding-left:calc(var(--tl-x) + (var(--tl-dot)/2 + var(--tl-b)) + var(--tl-gap));
+    }
+    .item time{color:var(--muted);font-variant-numeric:tabular-nums}
+    .item::before{
+      content:"";position:absolute;
+      left:calc(var(--tl-x) - (var(--tl-dot)/2 + var(--tl-b))); /* center on the line */
+      top:8px;width:var(--tl-dot);height:var(--tl-dot);border-radius:50%;
+      background:#fff;border:var(--tl-b) solid var(--accent);
+      transform:translateX(0.5px); /* sub-pixel nudge; adjust to 0/1px if needed */
+    }
     @media (max-width:700px){.item{grid-template-columns:1fr}}
-      /* 当侧栏内容高度大于视口时，自动取消粘性，避免遮挡 */
+
+    /* === Projects spacing === */
+    #projects{ --p-gap:14px; --li-gap:10px; --top-item-gap:20px; }
+    #projects > ul > li{ margin:0 0 var(--top-item-gap); }
+    #projects > ul > li > ul > li{ margin:0 0 var(--li-gap); }
+    #projects li > strong{ display:block; margin:0 0 6px; }
+    #projects ul{ line-height:1.75; }
+
+    /* === Publications list spacing === */
+    .pub-list{ margin-top:6px; }
+    .pub{
+      display:grid; grid-template-columns:110px 1fr; gap:16px;
+      padding:14px 0;            /* vertical space for each entry */
+    }
+    .pub + .pub{ border-top:1px solid var(--line); } /* thin divider between items */
+    .pub-thumb{
+      width:100px;height:72px;border-radius:10px;
+      background:var(--chip);border:1px solid var(--line);
+    }
+    .pub-body h3{ margin:0 0 4px; }
+    .pub-body p{ margin:4px 0; }
+
+    /* sticky fallback when sidebar taller than viewport */
     .side.is-static{position:static}
     @media (max-height: 750px){.side{position:static}}
   </style>
@@ -95,32 +117,32 @@
         <span class="pill">Aqueous batteries</span>
         <span class="pill">Metal oxide</span>
         <span class="pill">NH₄⁺ Storage</span>
-        <span class="pill">Photo‑assisted</span>
+        <span class="pill">Photo-assisted</span>
         <span class="pill">Heterojunctions</span>
       </div>
 
-      <!-- one-row contact icons -->
+      <!-- contact icons -->
       <div class="icon-row" aria-label="Contact links">
         <a href="mailto:ximan.dong@outlook.com" title="Email">
-<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z"/></svg>
-</a>
-<a href="https://scholar.google.com/citations?user=QVNclNYAAAAJ&hl" target="_blank" title="Google Scholar">
-<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 10l11 7 9-5.7V20h2V10L12 3Zm0 3.2L18.3 10 12 13.8 5.7 10 12 6.2Z"/></svg>
-</a>
-<a href="https://github.com/ximandong" target="_blank" title="GitHub">
-<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.93c.58.1.8-.25.8-.56v-2c-3.19.7-3.86-1.37-3.86-1.37-.53-1.36-1.3-1.73-1.3-1.73-1.07-.74.08-.73.08-.73 1.18.08 1.8 1.22 1.8 1.22 1.05 1.8 2.75 1.28 3.42.98.1-.77.41-1.28.74-1.58-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.3 1.2-3.12-.12-.29-.52-1.47.11-3.07 0 0 .98-.31 3.2 1.19A11.15 11.15 0 0 1 12 6.8c.99 0 1.98.13 2.9.38 2.22-1.5 3.2-1.2 3.2-1.2.63 1.6.23 2.78.11 3.07.75.82 1.2 1.86 1.2 3.12 0 4.41-2.69 5.38-5.25 5.67.42.36.79 1.06.79 2.14v3.17c0 .31.22.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
-</a>
-<a href="https://www.linkedin.com/in/ximan-dong-69933117b/" target="_blank" title="LinkedIn">
-<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8h4V24h-4V8ZM8 8h3.8v2.2h.06c.53-1 1.82-2.2 3.75-2.2C19.1 8 20 10.7 20 14.1V24h-4v-8.7c0-2.1-.04-4.7-2.9-4.7-2.9 0-3.4 2.3-3.4 4.5V24H8V8Z" transform="scale(.9) translate(2,0)"/></svg>
-</a>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z"/></svg>
+        </a>
+        <a href="https://scholar.google.com/citations?user=QVNclNYAAAAJ&hl" target="_blank" title="Google Scholar">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 10l11 7 9-5.7V20h2V10L12 3Zm0 3.2L18.3 10 12 13.8 5.7 10 12 6.2Z"/></svg>
+        </a>
+        <a href="https://github.com/ximandong" target="_blank" title="GitHub">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.93c.58.1.8-.25.8-.56v-2c-3.19.7-3.86-1.37-3.86-1.37-.53-1.36-1.3-1.73-1.3-1.73-1.07-.74.08-.73.08-.73 1.18.08 1.8 1.22 1.8 1.22 1.05 1.8 2.75 1.28 3.42.98.1-.77.41-1.28.74-1.58-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.3 1.2-3.12-.12-.29-.52-1.47.11-3.07 0 0 .98-.31 3.2 1.19A11.15 11.15 0 0 1 12 6.8c.99 0 1.98.13 2.9.38 2.22-1.5 3.2-1.2 3.2-1.2.63 1.6.23 2.78.11 3.07.75.82 1.2 1.86 1.2 3.12 0 4.41-2.69 5.38-5.25 5.67.42.36.79 1.06.79 2.14v3.17c0 .31.22.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/ximan-dong-69933117b/" target="_blank" title="LinkedIn">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8h4V24h-4V8ZM8 8h3.8v2.2h.06c.53-1 1.82-2.2 3.75-2.2C19.1 8 20 10.7 20 14.1V24h-4v-8.7c0-2.1-.04-4.7-2.9-4.7-2.9 0-3.4 2.3-3.4 4.5V24H8V8Z" transform="scale(.9) translate(2,0)"/></svg>
+        </a>
       </div>
 
       <a class="btn" style="margin-top:4px" href="./cv.pdf" download>Download CV</a>
 
-      <!-- Academic metrics (edit numbers below or pass as URL ?h=12&c=850) -->
+      <!-- metrics -->
       <div class="metrics">
         <div class="metric"><div class="num" id="m-citations">—</div><div class="label">Citations</div></div>
-        <div class="metric"><div class="num" id="m-hindex">—</div><div class="label">h‑index</div></div>
+        <div class="metric"><div class="num" id="m-hindex">—</div><div class="label">h-index</div></div>
       </div>
     </aside>
 
@@ -128,241 +150,150 @@
     <main>
       <section class="block" id="about">
         <h2>About</h2>
-        <p class="muted"> I am a joint Ph.D. candidate in Materials Engineering (University of Siegen) and Chemistry (Hasselt University). My research lies at the interface of light–matter interaction and electrochemical energy storage. I design tungsten-oxide and diamond-based photoelectrodes, build WO₃/TiO₂ and WO₃/BDD heterojunctions, and study their in/operando behaviour under illumination. Methodologically I combine rapid electrodeposition, magnetron sputtering and CVD growth with electrochemical testing and spectroscopic/structural characterization. I have authored works in <em>Advanced Energy Materials</em> (first-author, 2023), <em>Accounts of Materials Research</em> (co-first, 2024) and others, and delivered oral presentations at international conferences.</p>
+        <p class="muted">
+          I am a joint Ph.D. candidate in Materials Engineering (University of Siegen) and Chemistry (Hasselt University).
+          My research lies at the interface of light–matter interaction and electrochemical energy storage. I design tungsten-oxide
+          and diamond-based photoelectrodes, build WO₃/TiO₂ and WO₃/BDD heterojunctions, and study their in/operando behaviour under illumination.
+          Methodologically I combine rapid electrodeposition, magnetron sputtering and CVD growth with electrochemical testing and spectroscopic/structural
+          characterization. I have authored works in <em>Advanced Energy Materials</em> (first-author, 2023), <em>Accounts of Materials Research</em> (co-first, 2024),
+          and delivered oral presentations at international conferences.
+        </p>
       </section>
 
       <section class="block" id="education">
         <h2>Education</h2>
         <div class="timeline">
-          <div class="item"><time>  2022–2026</time><div><strong><span class="dot"></span>PhD, Materials Engineering — University of Siegen (Germany)</strong><span class="badge">Advisor: Xin Jiang</span></div></div>
-          <div class="item"><time>  2022–2026</time><div><strong><span class="dot"></span>PhD, Chemistry — Hasselt University (Belgium)</strong><span class="badge">Advisors: Nianjun Yang · Ken Haenen</span></div></div>
-          <div class="item"><time>  2017–2021</time><div><strong><span class="dot"></span>MSc, Electrochemistry — Tianjin University</strong><span class="badge">Advisors: Ying Tao · Quan‑Hong Yang</span></div></div>
-          <div class="item"><time>  2013–2017</time><div><strong><span class="dot"></span>BSc, Applied Chemistry — Hebei Normal Univ. of Sci & Tech</strong></div></div>
+          <div class="item"><time>2022–2026</time><div><strong><span class="dot"></span>PhD, Materials Engineering — University of Siegen (Germany)</strong><span class="badge">Advisor: Xin Jiang</span></div></div>
+          <div class="item"><time>2022–2026</time><div><strong><span class="dot"></span>PhD, Chemistry — Hasselt University (Belgium)</strong><span class="badge">Advisors: Nianjun Yang · Ken Haenen</span></div></div>
+          <div class="item"><time>2017–2021</time><div><strong><span class="dot"></span>MSc, Electrochemistry — Tianjin University</strong><span class="badge">Advisors: Ying Tao · Quan-Hong Yang</span></div></div>
+          <div class="item"><time>2013–2017</time><div><strong><span class="dot"></span>BSc, Applied Chemistry — Hebei Normal Univ. of Sci & Tech</strong></div></div>
         </div>
       </section>
 
       <section class="block" id="projects">
-  <h2>Projects</h2>
-  <ul>
-    <li>
-      <strong>Programmable Electrodeposition for Rapid NH₄⁺-Storage Electrodes</strong>
-      <ul>
-        <li><em>First</em> to regulate electrodeposition nucleation/growth to form nanocrystalline WO₃-based networks; a full electrode can be fabricated in <strong>≈1000 s</strong>.</li>
-        <li>Architecture engineered for <strong>fast ion diffusion and electronic transport</strong> (open porous paths + short diffusion length + continuous electron pathways).</li>
-        <li>Demonstrated high areal energy density (up to <strong>620 mWh·cm⁻²</strong>) and robust cycling as an <strong>NH₄⁺-storage</strong> cathode.</li>
-        <li>Toolkit: potential/pulse programming, bath chemistry tuning, post-conversion to phase-pure WO₃.</li> 
-        <li><strong>Status:</strong> Submitted to <em>Advanced Functional Materials</em> (2025).</li>
-      </ul>
-    </li>
+        <h2>Projects</h2>
+        <ul>
+          <li>
+            <strong>Programmable Electrodeposition for Rapid NH₄⁺-Storage Electrodes</strong>
+            <ul>
+              <li><em>First</em> to regulate electrodeposition nucleation/growth to form nanocrystalline WO₃-based networks; a full electrode can be fabricated in <strong>≈1000 s</strong>.</li>
+              <li>Architecture engineered for <strong>fast ion diffusion</strong> and <strong>efficient electronic transport</strong> (open porous paths, short diffusion length, continuous percolation).</li>
+              <li>Demonstrated high areal energy density up to <strong>620 mWh·cm⁻²</strong> with robust cycling as an NH₄⁺-storage cathode.</li>
+              <li>Toolkit: potential/pulse programming, bath chemistry tuning, post-conversion to phase-pure WO₃.</li>
+              <li><strong>Status:</strong> Submitted to <em>Advanced Functional Materials</em> (2025).</li>
+            </ul>
+          </li>
 
-    <li>
-      <strong>Photo-Assisted Ammonium-Ion Battery (PA-AIB)</strong>
-      <ul>
-        <li>Built photocathodes with <strong>WO₃/TiO₂</strong> and <strong>WO₃/BDD</strong> heterojunctions to achieve favorable band alignment and efficient charge separation.</li>
-        <li>Under illumination, generated <strong>photovoltage</strong> lowers charge-transfer resistance and boosts capacity/rate for NH₄⁺ storage.</li>
-        <li><strong>In/operando</strong> electrochemistry & spectroscopy used to quantify light-coupled kinetics and state evolution.</li>
-        <li>Delivered device-level prototypes showing stable light-enhanced output under practical intensities.</li>
-        <li><strong>Status:</strong> In preparation.</li>
-      </ul>
-    </li>
+          <li>
+            <strong>Photo-Assisted Ammonium-Ion Battery (PA-AIB)</strong>
+            <ul>
+              <li>Built photocathodes with <strong>WO₃/TiO₂</strong> and <strong>WO₃/BDD</strong> heterojunctions to achieve favorable band alignment and efficient charge separation.</li>
+              <li>Under illumination, generated <strong>photovoltage</strong> lowers charge-transfer resistance and boosts capacity/rate for NH₄⁺ storage.</li>
+              <li><strong>In/operando</strong> electrochemistry & spectroscopy used to quantify light-coupled kinetics and state evolution.</li>
+              <li>Device-level prototypes show stable light-enhanced output under practical intensities.</li>
+              <li><strong>Status:</strong> In preparation.</li>
+            </ul>
+          </li>
 
-    <li>
-      <strong>Diamond Electrochemistry & Flexible “Diamond-Cloth” Devices</strong>
-      <ul>
-        <li>Explored <strong>interlayer-affected diamond electrochemistry</strong>; grew transferable/flexible diamond films via CVD and integrated with current collectors.</li>
-        <li>Developed <strong>diamond-cloth</strong> electrodes for durable supercapacitors; validated bending durability and long-term stability.</li>
-        <li>Contributions linked to works in <em>Small Methods</em> (2025) and <em>J. Phys. Chem. C</em> (2025).</li>
-      </ul>
-    </li>
-  </ul>
-</section>
+          <li>
+            <strong>Diamond Electrochemistry & Flexible “Diamond-Cloth” Devices</strong>
+            <ul>
+              <li>Explored <strong>interlayer-affected diamond electrochemistry</strong>; grew transferable/flexible diamond films via CVD and integrated with current collectors.</li>
+              <li>Developed <strong>diamond-cloth</strong> electrodes for durable supercapacitors; validated bending durability and long-term stability.</li>
+              <li>Contributions linked to works in <em>Small Methods</em> (2025) and <em>J. Phys. Chem. C</em> (2025).</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
 
+      <section class="block" id="publications">
+        <h2>Publications
+          <span class="muted" style="font-weight:400">
+            [ <a href="https://scholar.google.com/citations?user=QVNclNYAAAAJ&hl" target="_blank" rel="noopener">Google Scholar</a> |
+              <a href="https://www.semanticscholar.org/search?q=Ximan%20Dong" target="_blank" rel="noopener">Semantic Scholar</a> ]
+          </span>
+        </h2>
 
- <section class="block" id="publications">
-  <h2>Publications
-    <span class="muted" style="font-weight:400">
-      [ <a href="https://scholar.google.com/citations?user=QVNclNYAAAAJ&hl" target="_blank" rel="noopener">Google Scholar</a> |
-        <a href="https://www.semanticscholar.org/search?q=Ximan%20Dong" target="_blank" rel="noopener">Semantic Scholar</a> ]
-    </span>
-  </h2>
+        <div class="pub-list">
+          <!-- 2025 -->
+          <div class="pub">
+            <div class="pub-thumb" aria-hidden="true"></div>
+            <div class="pub-body">
+              <h3>Interlayer Affected Diamond Electrochemistry</h3>
+              <p class="pub-authors">Xinyue Chen; <strong>Ximan Dong</strong>; Chuyan Zhang; Meng Zhu; Essraa Ahmed; Giridharan Krishnamurthy; Rozita Rouzbahani; Paulius Pobedinskas; Nicolas Gauquelin; Daen Jannis; et&nbsp;al.</p>
+              <p class="pub-venue"><em>Small Methods</em>, 9(2):2301774, 2025.</p>
+            </div>
+          </div>
 
-  <div class="pub-list">
+          <div class="pub">
+            <div class="pub-thumb" aria-hidden="true"></div>
+            <div class="pub-body">
+              <h3>High-Performance Flexible Supercapacitors Using Diamond Cloth</h3>
+              <p class="pub-authors">Changli Li; <strong>Ximan Dong</strong>; Zhaofeng Zhai; Nan Huang; Xin Jiang; Nianjun Yang</p>
+              <p class="pub-venue"><em>The Journal of Physical Chemistry C</em>, 129(14):6618–6627, 2025.</p>
+            </div>
+          </div>
 
-    <!-- 2025 -->
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-        
-        <h3>Interlayer Affected Diamond Electrochemistry</h3>
-        <p class="pub-authors">Xinyue Chen; <strong>Ximan Dong</strong>; Chuyan Zhang; Meng Zhu; Essraa Ahmed; Giridharan Krishnamurthy; Rozita Rouzbahani; Paulius Pobedinskas; Nicolas Gauquelin; Daen Jannis; et&nbsp;al.</p>
-        <p class="pub-venue"><em>Small Methods</em>, 9(2):2301774, 2025.</p>
-      </div>
-    </div>
+          <!-- 2024 -->
+          <div class="pub">
+            <div class="pub-thumb" aria-hidden="true"></div>
+            <div class="pub-body">
+              <h3>Diamond Composite: A “1 + 1 &gt; 2” Strategy to Design and Explore Advanced Functional Materials</h3>
+              <p class="pub-authors">Xinyue Chen; <strong>Ximan Dong</strong>; Xin Jiang; Nianjun Yang</p>
+              <p class="pub-venue"><em>Accounts of Materials Research</em>, 5(3):295–306, 2024.</p>
+            </div>
+          </div>
 
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-       
-        <h3>High-Performance Flexible Supercapacitors Using Diamond Cloth</h3> 
-        <p class="pub-authors">Changli Li; <strong>Ximan Dong</strong>; Zhaofeng Zhai; Nan Huang; Xin Jiang; Nianjun Yang</p>
-        <p class="pub-venue"><em>The Journal of Physical Chemistry C</em>, 129(14):6618–6627, 2025.</p>
-      </div>
-    </div>
+          <div class="pub">
+            <div class="pub-thumb" aria-hidden="true"></div>
+            <div class="pub-body">
+              <h3>Proton is Essential or Not: A Fresh Look on Pseudocapacitive Energy Storage of PANI Composites</h3>
+              <p class="pub-authors">Hongyuan Yu; Yu Long; Derong Chen; <strong>Ximan Dong</strong>; Xiaolin Ye; Yibo Zhang; Fangbing Li; Yue Xu; Ying Tao; Quan-Hong Yang</p>
+              <p class="pub-venue"><em>Small</em>, 20(1):2303832, 2024.</p>
+            </div>
+          </div>
 
-    <!-- 2024 -->
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-        <h3>Diamond Composite: A “1 + 1 &gt; 2” Strategy to Design and Explore Advanced Functional Materials</h3> 
-        <p class="pub-authors">Xinyue Chen; <strong>Ximan Dong</strong>; Xin Jiang; Nianjun Yang</p>
-        <p class="pub-venue"><em>Accounts of Materials Research</em>, 5(3):295–306, 2024.</p>
-      </div>
-    </div>
+          <!-- 2023 -->
+          <div class="pub">
+            <div class="pub-thumb" aria-hidden="true"></div>
+            <div class="pub-body">
+              <h3>Reconfiguring Hard Carbons with Emerging Sodium-Ion Batteries: A Perspective</h3>
+              <p class="pub-authors">Yue Chu; Jun Zhang; Yibo Zhang; Qi Li; Yiran Jia; <strong>Ximan Dong</strong>; Jing Xiao; Ying Tao; Quan-Hong Yang</p>
+              <p class="pub-venue"><em>Advanced Materials</em>, 35(31):2212186, 2023.</p>
+            </div>
+          </div>
 
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-       
-        <h3>Proton is Essential or Not: A Fresh Look on Pseudocapacitive Energy Storage of PANI Composites</h3>
-        <p class="pub-authors">Hongyuan Yu; Yu Long; Derong Chen; <strong>Ximan Dong</strong>; Xiaolin Ye; Yibo Zhang; Fangbing Li; Yue Xu; Ying Tao; Quan-Hong Yang</p>
-        <p class="pub-venue"><em>Small</em>, 20(1):2303832, 2024.</p>
-      </div>
-    </div>
+          <div class="pub">
+            <div class="pub-thumb" aria-hidden="true"></div>
+            <div class="pub-body">
+              <h3>Light-Assisted Energy Storage Devices: Principles, Performance, and Perspectives</h3>
+              <p class="pub-authors"><strong>Ximan Dong</strong>; Xinyue Chen; Xin Jiang; Nianjun Yang</p>
+              <p class="pub-venue"><em>Advanced Energy Materials</em>, 13(38):2301143, 2023.</p>
+            </div>
+          </div>
 
-    <!-- 2023 -->
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-       
-        <h3>Reconfiguring Hard Carbons with Emerging Sodium-Ion Batteries: A Perspective</h3>
-        <p class="pub-authors">Yue Chu; Jun Zhang; Yibo Zhang; Qi Li; Yiran Jia; <strong>Ximan Dong</strong>; Jing Xiao; Ying Tao; Quan-Hong Yang</p>
-        <p class="pub-venue"><em>Advanced Materials</em>, 35(31):2212186, 2023.</p>
-      </div>
-    </div>
+          <!-- 2022 -->
+          <div class="pub">
+            <div class="pub-thumb" aria-hidden="true"></div>
+            <div class="pub-body">
+              <h3>A Gelation-Assisted Approach for Versatile MXene Inks</h3>
+              <p class="pub-authors">Derong Chen; Yu Long; Zhitan Wu; <strong>Ximan Dong</strong>; Ning Wang; Jinyang Yu; Daliang Han; Ying Tao; Quan-Hong Yang</p>
+              <p class="pub-venue"><em>Advanced Functional Materials</em>, 32(36):2204372, 2022.</p>
+            </div>
+          </div>
 
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-        <span class="badge">AEM</span>
-        <h3>Light-Assisted Energy Storage Devices: Principles, Performance, and Perspectives</h3>
-        <p class="pub-authors"><strong>Ximan Dong</strong>; Xinyue Chen; Xin Jiang; Nianjun Yang</p>
-        <p class="pub-venue"><em>Advanced Energy Materials</em>, 13(38):2301143, 2023.</p>
-      </div>
-    </div>
+          <!-- 2021 -->
+          <div class="pub">
+            <div class="pub-thumb" aria-hidden="true"></div>
+            <div class="pub-body">
+              <h3>Reassembly of MXene Hydrogels into Flexible Films towards Compact and Ultrafast Supercapacitors</h3>
+              <p class="pub-authors">Zhitan Wu; Xiaochen Liu; Tongxin Shang; Yaqian Deng; Ning Wang; <strong>Ximan Dong</strong>; Juan Zhao; Derong Chen; Ying Tao; Quan-Hong Yang</p>
+              <p class="pub-venue"><em>Advanced Functional Materials</em>, 31(41):2102874, 2021.</p>
+            </div>
+          </div>
 
-    <!-- 2022 -->
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-       
-        <h3>A Gelation-Assisted Approach for Versatile MXene Inks</h3>
-        <p class="pub-authors">Derong Chen; Yu Long; Zhitan Wu; <strong>Ximan Dong</strong>; Ning Wang; Jinyang Yu; Daliang Han; Ying Tao; Quan-Hong Yang</p>
-        <p class="pub-venue"><em>Advanced Functional Materials</em>, 32(36):2204372, 2022.</p>
-      </div>
-    </div>
-
-    <!-- 2021 -->
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-       
-        <h3>Reassembly of MXene Hydrogels into Flexible Films towards Compact and Ultrafast Supercapacitors</h3>
-        <p class="pub-authors">Zhitan Wu; Xiaochen Liu; Tongxin Shang; Yaqian Deng; Ning Wang; <strong>Ximan Dong</strong>; Juan Zhao; Derong Chen; Ying Tao; Quan-Hong Yang</p>
-        <p class="pub-venue"><em>Advanced Functional Materials</em>, 31(41):2102874, 2021.</p>
-      </div>
-    </div>
-
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-      
-        <h3>A Review of Compact Carbon Design for Supercapacitors with High Volumetric Performance</h3>
-        <p class="pub-authors">Pei Li; Tongxin Shang; <strong>Ximan Dong</strong>; Huan Li; Ying Tao; Quan-Hong Yang</p>
-        <p class="pub-venue"><em>Small</em>, 17(48):2007548, 2021.</p>
-      </div>
-    </div>
-
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-       
-        <h3>Matching Electrode Lengths Enables the Practical Use of Asymmetric Fiber Supercapacitors with a High Energy Density</h3>
-        <p class="pub-authors"><strong>Ximan Dong</strong>; Jiachen Liang; Huan Li; Zhitan Wu; Lina Zhang; Yaqian Deng; Hongyuan Yu; Ying Tao; Quan-Hong Yang</p>
-        <p class="pub-venue"><em>Nano Energy</em>, 80:105523, 2021.</p>
-      </div>
-    </div>
-
-    <!-- 2020 -->
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-      
-        <h3>Dense Organic Molecules/Graphene Network Anodes with Superior Volumetric and Areal Performance for Asymmetric Supercapacitors</h3>
-        <p class="pub-authors">Lina Zhang; Daliang Han; Ying Tao; Changjun Cui; Yaqian Deng; <strong>Ximan Dong</strong>; Wei Lv; Zifeng Lin; Shichao Wu; Zhe Weng; et&nbsp;al.</p>
-        <p class="pub-venue"><em>Journal of Materials Chemistry A</em>, 8(1):461–469, 2020.</p>
-      </div>
-    </div>
-
-    <!-- 2019 -->
-    <div class="pub">
-      <div class="pub-thumb" aria-hidden="true"></div>
-      <div class="pub-body">
-        
-        <h3>Building Carbon-Based Versatile Scaffolds on the Electrode Surface to Boost Capacitive Performance for Fiber Pseudocapacitors</h3>
-        <p class="pub-authors">Jiachen Liang; Huifang Li; Huan Li; <strong>Ximan Dong</strong>; Xiaoyu Zheng; Ying Tao; Zhe Weng; Zheng-Hong Huang; Quan-Hong Yang</p>
-        <p class="pub-venue"><em>Small</em>, 15(48):1900721, 2019.</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section class="block" id="conferences">
-  <h2>Academic Talks & Activities</h2>
-  <ul>
-    <li>The 248th ECS Meeting — Oral (US, 2025)</li>
-    <li>29th Hasselt Diamond Workshop — Oral (Belgium, 2025)</li>
-    <li>34th International Conference on Diamond and Carbon Materials — Oral (Germany, 2024)</li>
-    <li>E-MRS Fall Meeting — Poster (Poland, 2024)</li>
-    <li>1st Global Chinese Materials Conference — Staff (Belgium, 2025)</li>
-    <li>E-MRS Fall Meeting — Staff (Poland, 2023)</li>
-  </ul>
-</section>
-
-<section class="block" id="experience">
-  <h2>Experience</h2>
-  <ul>
-    <li><strong>2024–2025</strong> — Regional Coordinator, <strong>CSSA North Rhine–Westphalia (Siegen Chapter)</strong></li>
-    <li><strong>2021–2022</strong> — Research Assistant, <strong>Advanced Carbon & Energy Laboratory (ACELab), Tianjin University</strong></li>
-    <li><strong>2013–2015</strong> — Director of Publicity, <strong>Student Union, Hebei Normal University of Science & Technology</strong></li>
-  </ul>
-</section>
-
-<footer class="muted" style="padding-top:8px">© 2025 Ximan Dong.</footer>
-
-          
-    </main>
-  </div>
-
-  <script>
-    // 简易学术指标：编辑下方数字，或用 URL 参数 ?h=12&c=850
-    (function(){
-      const url=new URL(location.href);const H=url.searchParams.get('h');const C=url.searchParams.get('c');
-      const metrics={h:H||'—', c:C||'—'};document.getElementById('m-hindex').textContent=metrics.h;document.getElementById('m-citations').textContent=metrics.c;
-    })();
-  </script>
-  <script>
-    // 根据侧栏高度与视口高度自动切换：粘性/普通
-    (function(){
-      const aside=document.querySelector('.side');
-      function adjust(){
-        if(!aside) return;
-        const fits=(aside.offsetHeight+24)<=window.innerHeight; // 24 = 顶部间距
-        aside.classList.toggle('is-static', !fits);
-      }
-      window.addEventListener('load',adjust);
-      window.addEventListener('resize',adjust);
-    })();
-  </script>
-</body>
-</html>
+          <div class="pub">
+            <div class="pub-thumb" aria-hidden="true"></div>
+            <div class="pub-body">
+              <h3>A Review of Compact Carbon Design for Supercapacitors with High Volumetric Performance</h3>
+              <p class="pub-authors">Pei Li; Tongxin
