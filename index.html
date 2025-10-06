@@ -85,6 +85,33 @@
     /* sticky fallback */
     .side.is-static{position:static}
     @media (max-height: 750px){.side{position:static}}
+
+    /* ===== Mobile tuning: shrink left gutter for timeline & pubs ===== */
+@media (max-width: 700px){
+  /* 时间轴整体往左收，正文更靠近竖线 */
+  :root{
+    --tl-x: 14px;   /* 竖线更贴边（原来 28px，可按需要再调） */
+    --tl-gap: 6px;  /* 竖线到文字的额外留白更小（原来 12px） */
+  }
+  .item{
+    grid-template-columns: 1fr;       /* 不再保留左侧固定列，改为单列 */
+    gap: 8px;
+    padding-left: calc(var(--tl-x) + (var(--tl-dot)/2 + var(--tl-b)) + var(--tl-gap));
+  }
+  .item time{
+    font-size: 14px;                   /* 时间稍微小一点 */
+  }
+  .timeline{ margin-left: 0; }
+
+  /* Publications：去掉左侧缩略图列，正文占满 */
+  .pub{
+    grid-template-columns: 1fr;        /* 单列布局 */
+    gap: 8px;
+    padding: 12px 0;                   /* 每条上下留白稍微小一点 */
+  }
+  .pub-thumb{ display: none; }         /* 隐藏缩略图，避免左侧留白 */
+}
+
   </style>
 </head>
 <body>
@@ -133,10 +160,10 @@
       <section class="block" id="education">
         <h2>Education</h2>
         <div class="timeline">
-          <div class="item"><time>2022–2026</time><div><strong>PhD, Materials Engineering — University of Siegen (Germany)</strong><br/><span class="muted">Supervisor: Prof. Xin Jiang</span></div></div>
-          <div class="item"><time>2022–2026</time><div><strong>PhD, Chemistry — Hasselt University (Belgium)</strong><br/><span class="muted">Supervisors: Prof. Nianjun Yang; Prof. Ken Haenen</span></div></div>
-          <div class="item"><time>2017–2021</time><div><strong>MSc, Electrochemistry — Tianjin University</strong><br/><span class="muted">Supervisors: Prof. Ying Tao; Prof. Quan-Hong Yang</span></div></div>
-          <div class="item"><time>2013–2017</time><div><strong>BSc, Applied Chemistry — Hebei Normal University of Science & Technology</strong></div></div>
+          <div class="item"><time>2022–2026</time><div>PhD, Materials Engineering — University of Siegen (Germany)<br/><span class="muted">Supervisor: Prof. Xin Jiang</span></div></div>
+          <div class="item"><time>2022–2026</time><div>PhD, Chemistry — Hasselt University (Belgium)<br/><span class="muted">Supervisors: Prof. Nianjun Yang; Prof. Ken Haenen</span></div></div>
+          <div class="item"><time>2017–2021</time><div>MSc, Electrochemistry — Tianjin University<br/><span class="muted">Supervisors: Prof. Ying Tao; Prof. Quan-Hong Yang</span></div></div>
+          <div class="item"><time>2013–2017</time><div>BSc, Applied Chemistry — Hebei Normal University of Science & Technology</div></div>
         </div>
       </section>
 
@@ -146,24 +173,21 @@
           <li>
             <strong>Nanocrystalline WO₃ for Rapid NH₄⁺-Storage Electrodes</strong>
             <ul>
-              <li>Developed a nanocrystalline-stacked amorphous WO₃ electrode via rapid electrodeposition (≈1000 s). The hierarchical architecture with abundant grain boundaries/oxygen vacancies enables fast NH₄⁺ diffusion and efficient charge transport.</li>
-              <li>Delivered high areal capacitance (2783 mF·cm⁻²) and excellent cycling stability; achieved <strong>620 mWh·cm⁻²</strong> in a full ammonium-ion hybrid supercapacitor.</li>
+              <li>Developed a folded nanocrystalline-stacked amorphous WO₃ electrode via rapid electrochemical deposition. The hierarchical architecture, provided abundant grain boundaries and oxygen vacancies for fast NH₄⁺ diffusion. The electrode delivered a high areal capacitance (2783 mF cm⁻²) and excellent cycling stability, achieving 620 mWh cm⁻² in a full ammonium-ion hybrid supercapacitor.</li>
             </ul>
           </li>
 
           <li>
             <strong>WO₃/TiO₂ Heterojunctions for Photo-Assisted Ammonium-Ion Battery (PA-AIB)</strong>
             <ul>
-              <li>Constructed WO₃/TiO₂ composites with type-II band alignment to exploit photo–electrochemical synergy; island-like WO₃ nanocrystals on TiO₂ enhance charge separation and transport.</li>
-              <li>Under illumination the electrode shows ~40% higher capacity and ~85% lower charge-transfer resistance, verifying efficient light-assisted NH₄⁺ storage.</li>
+              <li>Constructed WO₃/TiO₂ composites with type-II band alignment to exploit photo–electrochemical synergy; island-like WO₃ nanocrystals on TiO₂ enhance charge separation and transport. Under illumination the electrode shows ~40% higher capacity and ~85% lower charge-transfer resistance, verifying efficient light-assisted NH₄⁺ storage.</li>
             </ul>
           </li>
 
           <li>
             <strong>WO₃/BDD p–n Junction Composite Electrode for Photo-Assisted Ammonium-Ion Battery</strong>
             <ul>
-              <li>Formed a p–n junction between n-type WO₃ and p-type boron-doped diamond; the built-in electric field improves photocarrier separation while BDD provides high conductivity and mechanical robustness.</li>
-              <li>Observed ~1.7× higher photocurrent and ~20% higher capacitance under illumination, retaining &gt;90% capacity after long-term cycling.</li>
+              <li>Designed a WO₃/BDD composite forming a p–n junction between n-type WO₃ and p-type boron-doped diamond. The built-in electric field enhanced photocarrier separation, while BDD ensured high conductivity and mechanical stability. The composite delivered ~1.7× higher photocurrent and ~20% higher capacitance under illumination, retaining >90% capacity after long-term cycling.</li>
             </ul>
           </li>
         </ul>
